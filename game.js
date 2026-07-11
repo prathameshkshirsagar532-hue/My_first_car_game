@@ -1,12 +1,25 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// --- IMAGES LOADING FROM LINKS ---
+// --- IMAGES LOADING WITH FIX ---
+let imagesLoaded = 0;
+const totalImages = 2;
+
+function checkImagesLoad() {
+    imagesLoaded++;
+    if (imagesLoaded === totalImages) {
+        // Jab dono images load ho jayengi, tabhi game shuru hoga
+        update(); 
+    }
+}
+
 const carImage = new Image();
 carImage.src = "https://imgur.com"; 
+carImage.onload = checkImagesLoad; // Load check function trigger kiya
 
 const enemyImage = new Image();
 enemyImage.src = "https://imgur.com"; 
+enemyImage.onload = checkImagesLoad; // Load check function trigger kiya
 
 // Player Car Settings
 let car = { x: 180, y: 400, width: 50, height: 80, speed: 5 };
@@ -17,26 +30,23 @@ let enemy = { x: Math.random() * 350, y: -50, width: 50, height: 50, speed: 4 };
 let score = 0;
 let gameOver = false;
 
-// Keyboard Controls Listener (For PC)
+// Keyboard Controls Listener (PC)
 let keys = {};
 document.addEventListener("keydown", (e) => keys[e.key] = true);
 document.addEventListener("keyup", (e) => keys[e.key] = false);
 
-// --- MOBILE TOUCH CONTROLS LOGIC ---
+// --- MOBILE TOUCH CONTROLS ---
 const leftBtn = document.getElementById("leftBtn");
 const rightBtn = document.getElementById("rightBtn");
 
-// Mobile touch and mouse hold handling
 let moveLeft = false;
 let moveRight = false;
 
-// Left Button Events
 leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveLeft = true; });
 leftBtn.addEventListener("touchend", () => moveLeft = false);
 leftBtn.addEventListener("mousedown", () => moveLeft = true);
 leftBtn.addEventListener("mouseup", () => moveLeft = false);
 
-// Right Button Events
 rightBtn.addEventListener("touchstart", (e) => { e.preventDefault(); moveRight = true; });
 rightBtn.addEventListener("touchend", () => moveRight = false);
 rightBtn.addEventListener("mousedown", () => moveRight = true);
@@ -63,7 +73,7 @@ function update() {
         ctx.fillRect(195, i, 10, 20);
     }
 
-    // Move Car (PC Keys OR Mobile Buttons)
+    // Move Car (PC or Mobile)
     if ((keys["ArrowLeft"] || moveLeft) && car.x > 0) car.x -= car.speed;
     if ((keys["ArrowRight"] || moveRight) && car.x < canvas.width - car.width) car.x += car.speed;
 
@@ -81,7 +91,7 @@ function update() {
         gameOver = true;
     }
 
-    // Draw Images
+    // --- DRAW IMAGES ---
     ctx.drawImage(carImage, car.x, car.y, car.width, car.height);
     ctx.drawImage(enemyImage, enemy.x, enemy.y, enemy.width, enemy.height);
 
@@ -93,7 +103,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-// Restart Game on click/touch after game over
+// Restart Game
 canvas.addEventListener("click", () => {
     if (gameOver) {
         car.x = 180;
@@ -104,6 +114,3 @@ canvas.addEventListener("click", () => {
         update();
     }
 });
-
-// Start Game
-update();
