@@ -2,14 +2,13 @@
 
 Welcome to my first web-based 2D Car Game! Built completely from scratch using **HTML5 Canvas** and **Vanilla JavaScript**. 
 
-This project was developed directly from a mobile device and deployed live using **GitHub Pages**! 😎
+This project was developed directly from a my device and deployed live using **GitHub Pages**! 😎
 
 ---
 
 ## 🎮 Live Demo
 Play the game live in your browser here:
-👉 **[Click Here to Play the Game](https://github.io)**
-*(Note: Replace `your-username` with your actual GitHub username in the link above!)*
+👉 **[Click Here to Play the Game](https://prathameshkshirsagar532-hue.github.io/My_first_car_game/)**
 
 ---
 
